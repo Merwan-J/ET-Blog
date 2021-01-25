@@ -23,10 +23,14 @@
             <div class="col-md-5">
               <div class="latest-posts"><a href="#">
                 <ul class="list-unstyled">
-                  <li> <a href="#">My Account</a></li>
-                  <li> <a href="#">Add Listing</a></li>
-                  <li> <a href="#">Pricing</a></li>
-                  <li> <a href="#">Privacy &amp; Policy</a></li>
+                  <li> <a href="{% url 'index' %}">Home</a></li>
+                  <li> <a href="{% url 'blog' %}">Blog</a></li>
+                  <li> <a href="{% url 'contact' %}">Contact</a></li>
+                    {% if user.is_authenticated %}
+                  <li> <a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                  <li> <a href="{% url 'login' %}">Login</a></li> 
+                    {% endif %}
                 </ul>
             </div>
           </div>
