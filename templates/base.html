@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap Blog - B4 Template by Bootstrap Temple</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+{% include 'head.html' %}
+{{ form.media }}
+  </head>
+<body>
+    {% include 'header.html' %}
+
+{% block content %}
+
+
+
+
+{% endblock content %}
+
+
+    {% include 'footer.html' %}
+    {% if request.resolver_match.url_name != 'contact' %}
+    {% include 'scripts.html' %}
+    {% endif %}
+</body>
+</html>

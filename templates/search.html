@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+      <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-8"> 
+          <div class="container">
+            <div class="row">
+              <!-- post -->
+              {% if query_set %}
+              {% for post in query_set %}
+              <div class="post col-xl-6">
+                <div class="post-thumbnail"><a href="{% url 'post_detail' pk=post.pk %}"><img src={{post.thumbnail.url}} alt="..." class="img-fluid"></a></div>
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    <div class="date meta-last">{{post.date_published}}</div>
+                    {% for catagory in post.catagory.all %}
+                    <div class="category"><a href="#">{{catagory}}</a></div>
+                    {% endfor %}
+                  </div><a href="{% url 'post_detail' pk=post.pk %}">
+                    <h3 class="h4">{{post.title|title}}</h3></a>
+                  <p class="text-muted">{{post.body|truncatechars:"300"|safe}}</p>
+                  <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src={{post.author.profile_pic.url}} alt="..." class="img-fluid" ></div>
+                      <div class="title"><span>{{post.author|capfirst}}</span></div></a>
+                    <div class="date"><i class="icon-clock"></i> {{post.date_published|timesince}}</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{post.comments.all|length}}</div>
+                  </footer>
+                </div>
+              </div>
+              {% endfor %}
+              {% elif cata_search %}
+              <p>No Post found Under " {{query}} " category</p> 
+                {% else %}
+                <p>Search Result for " {{query}} " Not found</p> 
+              {% endif %}
+              </div>
+              
+
+            <!-- Pagination -->
+            {% if query_set.paginator.num_pages > 1 %}
+            <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-template d-flex justify-content-center">
+                {% if query_set.has_previous %}
+                <li class="page-item"><a href="?page={{ query_set.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                {% elif query_set.has_other_pages %}
+                <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                {% endif %}
+                <li class="page-item"><a href="#" class="page-link active">{{ query_set.number }}</a></li>
+                {% if query_set.has_next %}
+                <li class="page-item"><a href="?page={{ query_set.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                {% elif query_set.has_other_pages %}
+                <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                {% endif %}
+              </ul>
+            </nav>
+            {% endif %}
+          </div>
+        </main>
+    </div>
+</div>
+
+{% endblock content %}
+
+

@@ -1,0 +1,47 @@
+{% load hitcount_tags %}
+
+<aside class="col-lg-4">
+    <!-- Widget [Search Bar Widget]-->
+    <div class="widget search">
+      <header>
+        <h3 class="h6">Search the blog</h3>
+      </header>
+      <form action="{% url 'search' %}" class="search-form">
+        <div class="form-group">
+          <input type="text" name='search' placeholder="What are you looking for?" required>
+          <button type="submit" class="submit"><i class="icon-search"></i></button>
+        </div>
+      </form>
+    </div>
+    <!-- Widget [Latest Posts Widget]        -->
+    <div class="widget latest-posts">
+      <header>
+        <h3 class="h6">Latest Posts</h3>
+      </header>
+      <div class="blog-posts">
+        {% for post in latest_posts %}
+        <a href="{% url 'post_detail' pk=post.pk %}">
+          <div class="item d-flex align-items-center">
+            <div class="image"><img src={{post.thumbnail.url}} alt="..." class="img-fluid"></div>
+            <div class="title"><strong>{{post.title}}</strong>
+              <div class="d-flex align-items-center">
+                <div class="views"><i class="icon-eye"></i>{% get_hit_count for post %}</div>
+                <div class="comments"><i class="icon-comment"></i>{{post.comments.all|length}}</div>
+              </div>
+            </div>
+          </div></a>
+         {% endfor %}</div>
+    </div>
+    <!-- Widget [Categories Widget]-->
+    <div class="widget categories">
+      <header>
+        <h3 class="h6">Categories</h3>
+      </header>
+      {% for catagory in catagories  %}
+      <div class="item d-flex justify-content-between"><a href="{% url 'catagory_view' catagory=catagory %}" name='catagory' value="{{catagory}}">{{catagory|capfirst}}</a><span>{{catagory.posts.all|length}}</span></div>
+      {% endfor %}
+    </div>
+    
+    <!-- Widget [Tags Cloud Widget]-->
+    
+  </aside>
